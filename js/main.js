@@ -25,32 +25,89 @@ $(document).ready(function(){
     for(i=0; i< cardRange.length; i++){
         deck.push(cardRange[i]+ " Spades");
         deck.push(cardRange[i]+ " Hearts");
-        deck.push(cardRange[i]+ " CLubs");
+        deck.push(cardRange[i]+ " Clubs");
         deck.push(cardRange[i]+ " Diamonds");
+       
     }
   
     deck.sort(function(a,b) {return 0.5 - Math.random();});
 
     console.log(deck.length);
 
+
+
+
     //deal [0,1,2,3,4,5,6] = 21 | 52-21 =  31
 
-//problem is dealt cards not being created
+    var dealCounter; var stackPosition = 1; var rowcount =0; var stackCards_bottomPercentage = 0;
 
-    var dealCounter;
-    console.log("getsHere");
-    for(dealCounter=0, dealCounter>21; dealCounter++;)
+    for(dealCounter=0; dealCounter<=27; dealCounter++)
     {
-        var faceDownCard = document.createElement("div");
-        faceDownCard.id = "faceDownCard"+i;
-        faceDownCard.className = "SolitareCard topCard facedown";
-        console.log("create");
+        //create card
+        var currentCard = deck[dealCounter].toLowerCase();
+        var faceDownCard = document.createElement('div');       
+        faceDownCard.id = "faceDownCard"+dealCounter;
+        faceDownCard.style.position = "relative";
+        faceDownCard.style.bottom = stackCards_bottomPercentage+"%"
 
-        for(var j=2; j<7;j++){
-            document.getElementById("stack"+j).appendChild(faceDownCard);
-            const dealt = document.getElementById("stack"+j);
-            dealt.style.display = "block";
-            console.log("runs");
+        if(dealCounter==0)
+        {
+            faceDownCard.innerHTML=currentCard
+            faceDownCard.style.background = "white";
+            faceDownCard.style.padding = "0.5em"
+        }
+       
+
+        //change rows 
+        
+        if(stackPosition>7)
+        { 
+            stackCards_bottomPercentage += 90;
+            //RevealTop CArd and style
+            faceDownCard.innerHTML=currentCard; 
+            faceDownCard.style.background = "white";
+            faceDownCard.style.padding = "0.5em"
+            faceDownCard.style.bottom = stackCards_bottomPercentage+"%"
+            
+
+            //each row start new pos
+            stackPosition=0;
+            rowcount ++;
+            for(var temp=0; temp<rowcount; temp++){
+                stackPosition=temp+2
+            }
+           
+            
+        }
+   
+        //place cards in position
+          
+        //console.log("StackNo: "+stackPosition +"   in row no: "+ rowcount);
+        document.getElementById("stack"+stackPosition).appendChild(faceDownCard);
+      
+
+        
+        stackPosition++;
+       
+
+
+
+
+
+
+
+                
+        if(currentCard.includes("ades")){
+            faceDownCard.className = "SolitareCard facedown";
+        }
+        else  if(currentCard.includes("clubs")){
+            faceDownCard.className = "SolitareCard facedown";
+        }
+        else  if(currentCard.includes("dia")){
+            faceDownCard.className = "SolitareCard facedown";
+        }
+        else{
+            faceDownCard.className = "SolitareCard facedown";
         }
     }
 
@@ -74,16 +131,16 @@ function reveal(ev){
     
     var cardFromDeck = document.createElement("div");
     cardFromDeck.id = "cardDrawn"+i;
-    cardFromDeck.className = "SolitareCard topCard";
+    cardFromDeck.className = "cardPlaceholder newCard";
     cardFromDeck.ondragstart = drag;
     cardFromDeck.draggable = "true";
     document.getElementById("deckShown").appendChild(cardFromDeck);
 
-    const topCard= document.getElementById("cardDrawn"+i);
-    topCard.style.display = "block";
+    const cardDrawn= document.getElementById("cardDrawn"+i);
+    cardDrawn.style.display = "block";
 
 
-    topCard.innerHTML = deck[i+21];
+    cardDrawn.innerHTML = deck[i+21];
     i++;
 }
 
