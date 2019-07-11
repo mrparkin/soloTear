@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+    <head>
+        <link rel="stylesheet" href="css/main.css" />
+        <link href="css/bootstrap-theme.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/bootstrap.css" />    
+    </head>
+
+    <body>
+        <header>
+
+        </header>
+        <nav>
+            
+        </nav>
+   
+
+<div class="container-flex">
+    
+        <div class="row">
+            <div class="col-md-2">
+                <div id="deck" class="SolitareCard" onclick="reveal(event)"></div>
+            </div>
+            <div id=deckShown class="col-md-2">
+                   <!--  <div id="topCard" class="SolitareCard" draggable="true" ondragstart="drag(event)">
+                       <img  id="deckShown" class="shownCard" src="img/Ace.png"/>
+                    </div>-->
+            </div>
+            <div class="col-md-6">
+                <div id="hearts" class="suits">
+            
+                </div>
+                <div id="diamonds" class="suits">
+            
+                </div>
+                <div id="clubs" class="suits">
+            
+                </div>
+                <div id="spades" class="suits">
+                </div>
+            </div>
+        </div>
+        <div class="row m-5">
+            <div id="stack1" class="SolitareCard dealt" ondrop="drop(event)" ondragover="allowDrop(event)"  draggable="true" ondragstart="drag(event)" >
+                <div style="background: blue;" class="shownCard"></div>
+            </div>
+            <div id="stack2" class="SolitareCard dealt" ondrop="drop(event)" ondragover="allowDrop(event)"  draggable="true" ondragstart="drag(event)" >
+        
+            </div>
+            <div id="stack3" class="SolitareCard dealt" ondrop="drop(event)" ondragover="allowDrop(event)"  draggable="true" ondragstart="drag(event)">
+        
+            </div>
+            <div id="stack4" class="SolitareCard dealt" ondrop="drop(event)" ondragover="allowDrop(event)"  draggable="true" ondragstart="drag(event)">
+            </div>
+            <div id="stack5" class="SolitareCard dealt" ondrop="drop(event)" ondragover="allowDrop(event)"  draggable="true" ondragstart="drag(event)">
+            </div>
+            <div id="stack6" class="SolitareCard dealt" ondrop="drop(event)" ondragover="allowDrop(event)"  draggable="true" ondragstart="drag(event)">
+    
+            </div>
+            <div id="stack7" class="SolitareCard">
+
+            </div>
+        </div>
+    
+    </div>
+
+
+
+
+
+
+
+
+
+
+        <script src="/js/jquery.js"></script>
+        <script src="/js/main.js"></script>
+    </body>
+</html>
