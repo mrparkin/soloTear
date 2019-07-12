@@ -7,12 +7,12 @@ body{
 }
 
 .cardPlaceholder{
-    height: 9em;
-    width: 7em;
+    height: 8.5em;
+    width: 6.5em;
     float: left;
     margin: 1%;
-    background: rgba(78, 250, 78, 0.774);
     border-radius: 6px;
+    position: relative;
 }
 
 .SolitareCard{
@@ -41,7 +41,7 @@ body{
     float: right;
     margin: 10px;
     border: 1px solid black;
-    border-radius: 6px;
+    
 }
 
 .hearts{
@@ -79,6 +79,18 @@ body{
 
 .facedown{
     background: rgba(221, 42, 42, 0.808);
-    
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+}
+.faceUp{
+    background: white;
+    padding: 0.5em;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    border-radius: 6px;
+    border: 1px solid black;
 }
 
