@@ -60,7 +60,12 @@ body{
 /*END SUIT CLASS'*/
 
 
-
+.redCard{
+    color: red;
+}
+.blackCard{
+    color: black;
+}
 
 #deckShown{
     position: relative;
@@ -78,11 +83,13 @@ body{
 }
 
 .facedown{
-    background: rgba(221, 42, 42, 0.808);
+    background: rgba(69, 42, 221, 0.808);
     position: absolute;
     height: 100%;
     width: 100%;
     border-radius: 6px;
+    border: 1px solid black;
+
 }
 .faceUp{
     background: white;
