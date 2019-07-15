@@ -15,6 +15,8 @@ body{
     position: relative;
 }
 
+/*.cardPlaceholder:hover ~ .cardPlaceholder{border: 3px solid white;}*/
+
 .SolitareCard{
     height: 100%;
     width: 100%;

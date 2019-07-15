@@ -26,9 +26,6 @@ function convertToNumber(cardNo){
 function higherOrLower(selected, target){
     selected = convertToNumber(selected.toString());
     target = convertToNumber(target.toString());
-
-    console.log(selected+" , "+target);
-
     if(selected!=target-1){
         return false;
     }
@@ -37,11 +34,13 @@ function higherOrLower(selected, target){
 
 function checkForFlip(_selectedCardParentElement){
     //does sleected card have a card in previous stack to flip
-    if(_selectedCardParentElement.childNodes.length >0){
+    if(_selectedCardParentElement.childNodes.length >0)
+    {
         const checkIfLastCardNeedsTurning = document.getElementById(_selectedCardParentElement.id).lastElementChild.classList[0];
         const lastchildId = document.getElementById(_selectedCardParentElement.id).lastElementChild.id;
 
-        if(checkIfLastCardNeedsTurning.includes("faceUp")==false){
+        if(checkIfLastCardNeedsTurning.includes("faceUp")==false)
+        {
             document.getElementById(lastchildId).classList.remove("facedown");
             document.getElementById(lastchildId).classList.add("faceUp");
             document.getElementById(lastchildId).draggable ="true";
@@ -50,35 +49,60 @@ function checkForFlip(_selectedCardParentElement){
 
 }
 
+function checkIfCardFromDeck(_cardSelectedElement){
+    if(_cardSelectedElement.className.includes("newCard")){
+        _cardSelectedElement.classList.remove("newCard");
+    }
+}
+
+function checkIfSelectedCardHasChildren(_selectedCardElement){
+    if(_selectedCardElement.parentElement.childNodes){
+     /*   _selectedCardElement.parentElement.childNodes.array.forEach(x => {
+            console.log(x);
+        }); */
+
+
+        //Need to grab the selected element index and then grab all elements after that
+        var cNodes;
+
+        console.log(_selectedCardElement.nextElementSibling);
+
+        console.log(cNodes);
+        return _selectedCardElement.nextElementSibling.id;
+
+    }
+    else{return;}
+}
+
+
 function dropOntoLastChild(eventTarget, _selectedCardElement, _data){
     const eventTargetParent = eventTarget.parentElement;
     const _selectedCardParentElement = _selectedCardElement.parentElement;
     //only drop on the last card of stack
     if(eventTargetParent.lastElementChild || eventTargetParent.id.includes("stack")){
         
-        //MOVE CARD
-        //console.log(eventTarget.className);
-
-        if(eventTarget.className.includes("suits") || eventTargetParent.className.includes("suits")){
+        //MOVE CARD to suit stack  
+        if((eventTarget.className.includes("suits") || eventTargetParent.className.includes("suits")) && _selectedCardParentElement.lastElementChild){
             document.getElementById(_data).style.top = "";
+
             if(eventTarget.className.includes("faceUp")){
                 eventTargetParent.appendChild(document.getElementById(_data));
             }else{
                 eventTarget.appendChild(document.getElementById(_data));
             }
         }
+        //Move card to Stack
         else
         {
-            //console.log(eventTarget.style.top);
-            if(_selectedCardElement.className.includes("newCard")){
-                _selectedCardElement.classList.remove("newCard");
-            }
+           
             //stack overlap cards
             eventTargetParent.appendChild(document.getElementById(_data));
+            //eventTargetParent.appendChild(document.getElementById(checkIfSelectedCardHasChildren(_selectedCardElement)));
             var newTopSpace = eventTarget.style.top;
             newTopSpace = parseInt(newTopSpace.replace("%",""))+20;
-            //console.log(newTopSpace);
+           
             _selectedCardElement.style.top = newTopSpace+"%";
+            
         }
         //is selected from deck?
         if(_selectedCardParentElement.id=="deckShown")
@@ -96,8 +120,7 @@ function dropOntoLastChild(eventTarget, _selectedCardElement, _data){
 
 document.addEventListener("dragstart",function(ev){
   let data =  ev.dataTransfer.setData("text", ev.target.id);
-  console.log(document.getElementById(data).nextElementSibling);
-  //  ev.target.style.opacity ="0.7";
+ // console.log(document.getElementById(data).nextElementSibling);                                              NEED TO FIX THIS NEXT 
 });
 document.addEventListener("dragover", function(ev){
     ev.preventDefault();
@@ -131,21 +154,23 @@ document.addEventListener("drop", function(ev){
     else{
         //if card dropped on suit stack
         if(ev.target.parentElement.className.includes("suits")|| ev.target.className.includes("suits")){
+            checkIfCardFromDeck(selectedCard);
             dropOntoLastChild(ev.target, selectedCard, data);
         }
         //if card is dropped on empty stack
         else if(ev.target.className.includes("cardPlaceholder") && selectedCardType.toLowerCase().includes("k")){
             document.getElementById(data).style.top ="";
+            checkIfCardFromDeck(selectedCard);
             ev.target.appendChild(document.getElementById(data));
             checkForFlip(selectedCardParent);
         }
         //if card dropped on stack
         else if(redOrBlack(ev.target.textContent) != redOrBlack(selectedCardType)){
             if(higherOrLower(selectedCard.textContent,ev.target.textContent)==false)
-            {
-                console.log("it was false");
+            {               
                 return;
             }
+            checkIfCardFromDeck(selectedCard);
             dropOntoLastChild(ev.target, selectedCard, data);
             
         }
@@ -194,6 +219,8 @@ $(document).ready(function(){
         faceUpCard.classList.add("faceUp");
         changeColour(faceUpCard);
 
+
+
         if(dealCounter==0)
         {
             document.getElementById("stack"+stackPosition).appendChild(faceUpCard);
@@ -220,6 +247,8 @@ $(document).ready(function(){
    
         stackPosition++; 
     }
+    //remove dealt cards from array
+    deck.splice(0,28);
 });
 
 
@@ -234,8 +263,10 @@ function changeColour(cardElement){
 
 //deck click event
 let deckDrawnCounter=0;
+let goneThroughDeck=false;
 function reveal(ev){
     
+
     const cardFromDeck = document.createElement("div");
     cardFromDeck.id = "cardDrawn"+deckDrawnCounter;
     cardFromDeck.className = "cardPlaceholder newCard faceUp";
@@ -244,17 +275,33 @@ function reveal(ev){
     const cardDrawn = document.getElementById("cardDrawn"+deckDrawnCounter);
     cardDrawn.style.display = "block";
 
-    let leftOverCards =[];
-    leftOverCards = deck.shift(27);
-    
-    if(deckDrawnCounter===27){
-        cardFromDeck.style.background = "green";
-    }
-    else if(deckDrawnCounter>27){
-        deckDrawnCounter=0;
+
+  
+    if(goneThroughDeck==false){
+
+        if(deckDrawnCounter==deck.length){
+            cardFromDeck.style.background = "green";
+            goneThroughDeck = true;
+            deckDrawnCounter = 0;
+        }
+        else{
+            cardDrawn.innerHTML = deck[deckDrawnCounter];
+            console.log("new Card Created");
+        }
     }
     else{
-    cardDrawn.innerHTML = leftOverCards[deckDrawnCounter];
+        
+        //counter starts at 1           TRUE SIMPLE FINISH OF THIS PART WOULD MEAN GETTING THE GREEN BACKGROUND TO SHOW EVERY
+
+        var getCard = document.getElementById("deckShown").childNodes;
+        
+        if(deckDrawnCounter==deck.length){deckDrawnCounter=1;}
+        getCard[deckDrawnCounter-1].style.zIndex=1;
+        console.log(deckDrawnCounter);
+        if(deckDrawnCounter>=2){getCard[deckDrawnCounter-2].style.zIndex=0;}
+        
+        
+        
     }
     changeColour(cardDrawn);
     deckDrawnCounter++;
