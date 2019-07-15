@@ -1,3 +1,5 @@
+'use strict';/* jshint -W097 */
+
 function redOrBlack (string){
     if(string.toLowerCase().includes("diamonds")||string.toLowerCase().includes("hearts")){
         return "red";
@@ -56,22 +58,21 @@ function checkIfCardFromDeck(_cardSelectedElement){
 }
 
 function checkIfSelectedCardHasChildren(_selectedCardElement){
-    if(_selectedCardElement.parentElement.childNodes){
-     /*   _selectedCardElement.parentElement.childNodes.array.forEach(x => {
-            console.log(x);
-        }); */
+    var subElementsIds = [];
+    if(_selectedCardElement.nextElementSibling){
+        
+        
+        subElementsIds.push(_selectedCardElement.nextElementSibling.id);
 
+        checkIfSelectedCardHasChildren(_selectedCardElement.nextElementSibling);
 
-        //Need to grab the selected element index and then grab all elements after that
-        var cNodes;
+       
 
-        console.log(_selectedCardElement.nextElementSibling);
-
-        console.log(cNodes);
+    
         return _selectedCardElement.nextElementSibling.id;
 
     }
-    else{return;}
+    else{return subElementsIds;}
 }
 
 
@@ -94,7 +95,10 @@ function dropOntoLastChild(eventTarget, _selectedCardElement, _data){
         //Move card to Stack
         else
         {
-           
+            var subElementIdsArray = checkIfSelectedCardHasChildren(_selectedCardElement);
+            console.log(subElementIdsArray);//jshint ignore:line
+                
+
             //stack overlap cards
             eventTargetParent.appendChild(document.getElementById(_data));
             //eventTargetParent.appendChild(document.getElementById(checkIfSelectedCardHasChildren(_selectedCardElement)));
@@ -107,6 +111,7 @@ function dropOntoLastChild(eventTarget, _selectedCardElement, _data){
         //is selected from deck?
         if(_selectedCardParentElement.id=="deckShown")
         {
+            //              need to pop the array (DECK) to remove card 
            return;
         }
 
@@ -286,7 +291,7 @@ function reveal(ev){
         }
         else{
             cardDrawn.innerHTML = deck[deckDrawnCounter];
-            console.log("new Card Created");
+           
         }
     }
     else{
@@ -297,7 +302,7 @@ function reveal(ev){
         
         if(deckDrawnCounter==deck.length){deckDrawnCounter=1;}
         getCard[deckDrawnCounter-1].style.zIndex=1;
-        console.log(deckDrawnCounter);
+        
         if(deckDrawnCounter>=2){getCard[deckDrawnCounter-2].style.zIndex=0;}
         
         
