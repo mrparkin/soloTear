@@ -75,7 +75,7 @@ function checkIfSelectedCardHasChildren(_selectedCardElement){
     else{return subElementsIds;}
 }
 
-
+var subElementIdsArray ;
 function dropOntoLastChild(eventTarget, _selectedCardElement, _data){
     const eventTargetParent = eventTarget.parentElement;
     const _selectedCardParentElement = _selectedCardElement.parentElement;
@@ -95,18 +95,27 @@ function dropOntoLastChild(eventTarget, _selectedCardElement, _data){
         //Move card to Stack
         else
         {
-            var subElementIdsArray = checkIfSelectedCardHasChildren(_selectedCardElement);
-            console.log(subElementIdsArray);//jshint ignore:line
+            subElementIdsArray = checkIfSelectedCardHasChildren(_selectedCardElement);
                 
 
             //stack overlap cards
             eventTargetParent.appendChild(document.getElementById(_data));
+         
+            
             //eventTargetParent.appendChild(document.getElementById(checkIfSelectedCardHasChildren(_selectedCardElement)));
             var newTopSpace = eventTarget.style.top;
             newTopSpace = parseInt(newTopSpace.replace("%",""))+20;
            
+            if(Number.isNaN(newTopSpace)){
+                newTopSpace=20;
+            }
+
+
+
             _selectedCardElement.style.top = newTopSpace+"%";
-            
+         
+
+
         }
         //is selected from deck?
         if(_selectedCardParentElement.id=="deckShown")
@@ -117,7 +126,13 @@ function dropOntoLastChild(eventTarget, _selectedCardElement, _data){
 
         checkForFlip(_selectedCardParentElement);
 
-       
+        
+        console.log("ssleecred card has movd by now");//jshint ignore:line
+
+
+        if(subElementIdsArray.length>0){
+            eventTargetParent.appendChild(document.getElementById(subElementIdsArray[0]));  
+        }
 
     }
 }
