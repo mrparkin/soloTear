@@ -1,0 +1,107 @@
+.test{
+    background:yellow !important;
+}
+
+body{
+    background:green !important;
+}
+
+.cardPlaceholder{
+    height: 6.5em;
+    width: 4.5em;
+    float: left;
+    margin: 1%;
+    border-radius: 6px;
+    position: relative;
+}
+
+/*.cardPlaceholder:hover ~ .cardPlaceholder{border: 3px solid white;}*/
+
+.SolitareCard{
+    height: 100%;
+    width: 100%;
+    float: left;
+    margin: 1%;
+    border: 1px solid black;
+    border-radius: 6px;
+}
+
+
+
+#deck{
+    margin: 10%;
+    background:rgb(139, 81, 81);
+}
+
+
+
+/*SUITS CLASS'*/
+.suits{
+ 
+    background:rgba(238, 234, 234, 0.383) !important;
+   
+    float: right;
+    margin: 10px;
+    border: 1px solid black;
+    
+}
+
+.hearts{
+    background:rgb(179, 19, 19);
+}
+.clubs{
+    background: rgba(14, 1, 1, 0.822);
+}
+.diamonds{
+    background: greenyellow;
+}
+.spades{
+    background: pink;
+}
+
+/*END SUIT CLASS'*/
+
+
+.redCard{
+    color: red;
+    font-size: 0.8em;
+}
+.blackCard{
+    color: black;
+    font-size: 0.8em;
+}
+
+#deckShown{
+    position: relative;
+}
+.topCard{
+    display: none;
+    position: absolute;
+}
+
+
+.newCard{
+    display: none;
+    position: absolute;
+    margin: 10%;
+}
+
+.facedown{
+    background: rgba(69, 42, 221, 0.808);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid black;
+
+}
+.faceUp{
+    background: white;
+    padding: 0.5em;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    border-radius: 6px;
+    border: 1px solid black;
+}
+
