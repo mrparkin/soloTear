@@ -26,7 +26,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.6",
     "jquery": "^3.4.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "npm": "^6.11.2",
     "popper.js": "^1.15.0",
     "postcss-loader": "^3.0.0"
